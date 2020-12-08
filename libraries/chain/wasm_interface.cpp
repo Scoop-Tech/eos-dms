@@ -988,6 +988,14 @@ class permission_api : public context_aware_api {
          return time_point(acct->creation_date).time_since_epoch().count();
       }
 
+      int64_t get_account_nudge_time( account_name account ) {
+         auto* acct = context.db.find<account_object, by_name>(account);
+         EOS_ASSERT( acct != nullptr, action_validate_exception,
+                     "account '${account}' does not exist", ("account", account) );
+         return time_point(acct->nudge_date).time_since_epoch().count();
+      }
+    
+
    private:
       void unpack_provided_keys( flat_set<public_key_type>& keys, const char* pubkeys_data, uint32_t pubkeys_size ) {
          keys.clear();

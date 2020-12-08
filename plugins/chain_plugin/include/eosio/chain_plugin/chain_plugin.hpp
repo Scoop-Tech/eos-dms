@@ -149,6 +149,7 @@ public:
       bool                       privileged = false;
       fc::time_point             last_code_update;
       fc::time_point             created;
+      fc::time_point             nudged;
 
       optional<asset>            core_liquid_balance;
 

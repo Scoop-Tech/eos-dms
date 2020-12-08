@@ -7,6 +7,24 @@
 
 #include "multi_index_includes.hpp"
 
+//
+// TODO - 
+//
+//    TESTS: ## with all nudge changes:
+//          69 - snapshot_unit_test_wabt (Failed)               // ?
+//          70 - snapshot_unit_test_eos-vm (Failed)             // ?
+//          71 - snapshot_unit_test_eos-vm-jit (Failed)         // ?
+//
+//    TESTS: without BOTH ABI-related: 
+//          > account_object.hpp: FC_REFLECT 
+//          > state_history_serialization.hpp
+//          > state_history_plugin_abi.cpp 
+//
+//  TODO: add test(s) for new field...
+//  TODO: test propagation nudge_date up to chain_plugin_api (get_account())
+//  TODO: run local nodeos => scp svr => scpx-app
+//
+
 namespace eosio { namespace chain {
 
    class account_object : public chainbase::object<account_object_type, account_object> {
@@ -15,6 +33,7 @@ namespace eosio { namespace chain {
       id_type              id;
       account_name         name; //< name should not be changed within a chainbase modifier lambda
       block_timestamp_type creation_date;
+      block_timestamp_type nudge_date; // DM
       shared_blob          abi;
 
       void set_abi( const eosio::chain::abi_def& a ) {
@@ -104,7 +123,8 @@ CHAINBASE_SET_INDEX_TYPE(eosio::chain::account_metadata_object, eosio::chain::ac
 CHAINBASE_SET_INDEX_TYPE(eosio::chain::account_ram_correction_object, eosio::chain::account_ram_correction_index)
 
 
-FC_REFLECT(eosio::chain::account_object, (name)(creation_date)(abi))
+//FC_REFLECT(eosio::chain::account_object, (name)(creation_date)(abi))
+FC_REFLECT(eosio::chain::account_object, (name)(creation_date)(nudge_date)(abi))
 FC_REFLECT(eosio::chain::account_metadata_object, (name)(recv_sequence)(auth_sequence)(code_sequence)(abi_sequence)
                                                   (code_hash)(last_code_update)(flags)(vm_type)(vm_version))
 FC_REFLECT(eosio::chain::account_ram_correction_object, (name)(ram_correction))

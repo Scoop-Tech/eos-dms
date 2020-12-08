@@ -95,6 +95,7 @@ void apply_eosio_newaccount(apply_context& context) {
    const auto& new_account = db.create<account_object>([&](auto& a) {
       a.name = create.name;
       a.creation_date = context.control.pending_block_time();
+      a.nudge_date = a.creation_date;//context.control.pending_block_time();
    });
 
    db.create<account_metadata_object>([&](auto& a) {
